@@ -1,18 +1,49 @@
 #include "537text.h"
 
-MAINMENU MENU 
+MAIN MENU 
 {
- POPUP "&文件"
- {
-  MENUITEM "&打开...", CM_FILE_OPEN
-  MENUITEM "&保存", CM_FILE_SAVEAS
-  MENUITEM "&退出", CM_FILE_EXIT
- }
-
- POPUP "&帮助"
- {
-  MENUITEM "&帮助", CM_HELP 
-  MENUITEM "&关于...", CM_ABOUT
- }
+	POPUP "&文件"
+	{
+		MENUITEM "&新建", CM_FILE_NEW
+		MENUITEM "&打开...", CM_FILE_OPEN
+		MENUITEM "&保存", CM_FILE_SAVE, GRAYED
+		MENUITEM "&另存为...", CM_FILE_SAVEAS, GRAYED
+		MENUITEM SEPARATOR
+		MENUITEM "&编码转换器", CM_FILE_ANSITOUNICODE 
+		MENUITEM SEPARATOR
+		MENUITEM "&退出", CM_FILE_EXIT
+	}
+	
+	POPUP "&编辑", GRAYED
+	{
+		MENUITEM "&撤销\tCtrl+Z", CM_EDIT_UNDO
+		MENUITEM SEPARATOR
+		MENUITEM "&剪切\tCtrl+X", CM_EDIT_CUT
+		MENUITEM "&复制\tCtrl+C", CM_EDIT_COPY
+		MENUITEM "&粘贴\tCtrl+V", CM_EDIT_PASTE
+	}
+	
+	POPUP "&窗口", GRAYED
+	{
+		MENUITEM "&窗口叠放", CM_WINDOW_CASCADE
+		MENUITEM "&横向排列", CM_WINDOW_TILEHORZ
+		MENUITEM "&纵向排列", CM_WINDOW_TILEVERT
+	}
+	
+	POPUP "&帮助"
+	{
+		POPUP "&获取帮助与支持"
+		{
+			MENUITEM "&电子邮件", CM_EMAIL
+			MENUITEM "&在线支持", CM_WEBHELP
+		}
+		POPUP "&软件声明和许可"
+		{
+			MENUITEM "&软件声明", CM_README 
+			MENUITEM "&许可协议", CM_LICENCE
+		}
+		MENUITEM SEPARATOR
+		MENUITEM "&537工作室官方网站", CM_WEB
+		MENUITEM "&关于537文本编辑器", CM_ABOUT
+	}
 }
-
