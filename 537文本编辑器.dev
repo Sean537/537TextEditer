@@ -32,49 +32,50 @@ CompilerSettings=0000000100000000000000000
 UnitCount=3
 
 [VersionInfo]
-Major=1
-Minor=0
+Major=2
+Minor=1
 Release=0
 Build=0
 LanguageID=2052
 CharsetID=1252
-CompanyName=Studio 537
-FileVersion=1.0.0.0
+CompanyName=537 Studio
+FileVersion=2.1.0.0
 FileDescription=537文本编辑器
-InternalName=文本编辑器
-LegalCopyright=Copyright @2023 537text
-LegalTrademarks=537Text
-OriginalFilename=537text
+InternalName=537Text
+LegalCopyright=Copyright 537Studio 2023.All Rights Reserved。
+LegalTrademarks=537TextLogo
+OriginalFilename=537Text
 ProductName=537文本编辑器
-ProductVersion=1.0.0.0
+ProductVersion=2.1.0.0
 AutoIncBuildNr=0
 SyncProduct=1
 
-[Unit1]
-FileName=537text.cpp
-CompileCpp=1
-Folder=
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
 [Unit2]
-FileName=537text.h
+FileName=resource.rc
 CompileCpp=1
-Folder=
+Folder=Resources
 Compile=1
-Link=1
+Link=0
 Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
 [Unit3]
-FileName=resource.rc
-Folder=Resources
+FileName=537main.cpp
+Folder=
 Compile=1
-Link=0
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+CompileCpp=1
+
+[Unit1]
+FileName=537text.h
+CompileCpp=1
+Folder=
+Compile=1
+Link=1
 Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
