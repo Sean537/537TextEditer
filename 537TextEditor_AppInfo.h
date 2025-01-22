@@ -1,0 +1,23 @@
+/* THIS FILE WILL BE OVERWRITTEN BY DEV-C++ */
+/* DO NOT EDIT ! */
+
+#ifndef 537TEXTEDITOR_APPINFO_H
+#define 537TEXTEDITOR_APPINFO_H
+
+/* VERSION DEFINITIONS */
+#define VER_STRING	"2.2.1.0"
+#define VER_MAJOR	2
+#define VER_MINOR	1
+#define VER_RELEASE	0
+#define VER_BUILD	0
+#define COMPANY_NAME	"537 Studio"
+#define FILE_VERSION	"2.2.1.0"
+#define FILE_DESCRIPTION	"537 Text Editor"
+#define INTERNAL_NAME	"537 Text Editor"
+#define LEGAL_COPYRIGHT	"Copyright (C) 2023-2025 537Studio."
+#define LEGAL_TRADEMARKS	"537 Text Editor Logo"
+#define ORIGINAL_FILENAME	"537 Text Editor"
+#define PRODUCT_NAME	"537文本编辑器"
+#define PRODUCT_VERSION	"2.2.1.0"
+
+#endif /*537TEXTEDITOR_APPINFO_H*/

@@ -7,7 +7,7 @@
 
 
 #include "537text.h"
-// ��ȷ����ı�����֧�� wchar_t �� L prefix ���ַ�����
+// 请确保你的编译器支持 wchar_t 和 L prefix 的字符串。
 #if defined(_MSC_VER) && !defined(_CPPRTTI) && !defined(_CPPGLOBAL)  
     #define _CPPGLOBAL 1  
 #endif  
@@ -17,8 +17,8 @@
 LRESULT CALLBACK WndProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam);
 LRESULT CALLBACK MDIChildWndProc(HWND hwnd, UINT Message, WPARAM wParam,LPARAM lParam);
 
-char g_szAppName[] = "537MDI������";
-char g_szChild[] = "537MDI�Ӵ���";
+char g_szAppName[] = "537MDI主窗口";
+char g_szChild[] = "537MDI子窗口";
 HINSTANCE g_hInst;
 HWND g_hMDIClient, g_hStatusBar, g_hToolBar;
 HWND g_hMainWindow;
@@ -112,7 +112,7 @@ BOOL GetFileName(HWND hwnd, LPSTR pszFileName, BOOL bSave) {
 	
 	ofn.lStructSize = sizeof(ofn);
 	ofn.hwndOwner = hwnd;
-	ofn.lpstrFilter = "�����ļ� (*.*)\0*.*\0�ı��ļ� (*.txt)\0*.txt\0��־�ļ� (*.log)\0*.log\0�����ļ� (*.ini)\0*.ini\0C++�����ļ� (*.cpp)\0*.cpp\0C����ͷ�ļ� (*.h)\0*.h\0Python�����ļ� (*.py)\0*.py\0HTML��̬��ҳ�ļ� (*.html)\0*.html\0CSS�����ļ� (*.css)\0*.css\0JavaScript�����ļ� (*.js)\0*.js\0Microsoft Visual Basic�����ļ� (*.vb)\0*.vb\0\0";
+	ofn.lpstrFilter = "所有文件 (*.*)\0*.*\0文本文件 (*.txt)\0*.txt\0日志文件 (*.log)\0*.log\0配置文件 (*.ini)\0*.ini\0C++代码文件 (*.cpp)\0*.cpp\0C语言头文件 (*.h)\0*.h\0Python代码文件 (*.py)\0*.py\0HTML静态网页文件 (*.html)\0*.html\0CSS代码文件 (*.css)\0*.css\0JavaScript代码文件 (*.js)\0*.js\0Microsoft Visual Basic代码文件 (*.vb)\0*.vb\0\0";
 	ofn.lpstrFile = pszFileName;
 	ofn.nMaxFile = MAX_PATH;
 	ofn.lpstrDefExt = "txt";
@@ -150,7 +150,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,LPSTR lpszCmdPar
 	WndClassEx.hIconSm         = LoadIcon(hInstance,"A");
 
 	if(!RegisterClassEx(&WndClassEx)) {
-		MessageBox(0, "�޷�ע�ᴰ�ڡ�����ϵͳ�����Ƿ�������Ѱ����������", "����",MB_ICONEXCLAMATION | MB_OK);
+		MessageBoxW(0, "无法注册窗口。请检查系统环境是否正常或寻求技术帮助。", "错误",MB_ICONEXCLAMATION | MB_OK);
 		return -1;
 	}
 
@@ -160,12 +160,12 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,LPSTR lpszCmdPar
 	WndClassEx.hbrBackground   = (HBRUSH)(COLOR_3DFACE+1);
 
 	if(!RegisterClassEx(&WndClassEx)) {
-		MessageBox(0, "�޷�ע���Ӵ��ڡ�����ϵͳ�����Ƿ�������Ѱ����������", "����",
+		MessageBoxW(0, "无法注册子窗口。请检查系统环境是否正常或寻求技术帮助。", "错误",
 		MB_ICONEXCLAMATION | MB_OK);
 		return -1;
 	}
 
-	g_hMainWindow = CreateWindowEx(WS_EX_APPWINDOW,g_szAppName,"537�ı��༭��",WS_OVERLAPPEDWINDOW | WS_CLIPCHILDREN,
+	g_hMainWindow = CreateWindowEx(WS_EX_APPWINDOW,g_szAppName,"537文本编辑器",WS_OVERLAPPEDWINDOW | WS_CLIPCHILDREN,
 		CW_USEDEFAULT,
 		CW_USEDEFAULT,
 		CW_USEDEFAULT,
@@ -173,7 +173,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,LPSTR lpszCmdPar
 		0, 0, hInstance, NULL);
 
 	if (g_hMainWindow == NULL){
-		MessageBox(0, "�޴��ڡ�����ϵͳ�����Ƿ�������Ѱ����������", "����", MB_ICONEXCLAMATION | MB_OK);
+		MessageBoxW(0, "无窗口。请检查系统环境是否正常或寻求技术帮助。", "错误", MB_ICONEXCLAMATION | MB_OK);
 		return -1;
 	}
 
@@ -210,7 +210,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam) 
 			WS_CHILD | WS_VISIBLE | SBARS_SIZEGRIP, 0, 0, 0, 0,
 			hwnd, (HMENU)ID_STATUSBAR, g_hInst, NULL);
 			SendMessage(g_hStatusBar, SB_SETPARTS, 3, (LPARAM)iStatusWidths);
-			SendMessage(g_hStatusBar, SB_SETTEXT, 2, (LPARAM)"537�ı��༭��  �汾2.2��x86��  537�����ҳ�Ʒ");
+			SendMessage(g_hStatusBar, SB_SETTEXT, 2, (LPARAM)"537文本编辑器  版本2.2（x86）  537工作室出品");
 			
 			g_hToolBar = CreateWindowEx(0, TOOLBARCLASSNAME, NULL,
 			WS_CHILD | WS_VISIBLE, 0, 0, 0, 0,
@@ -282,29 +282,29 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam) 
 			tbb[13].fsStyle = TBSTYLE_BUTTON;
 			tbb[13].idCommand = CM_ABOUT;
 			/*
-			�� Win32 API �У�iBitmap ��������ָ����������ť��ͼ��������������һЩ�����Ŀ�ѡͼ�꣺
+			在 Win32 API 中，iBitmap 属性用于指定工具栏按钮的图标索引。以下是一些常见的可选图标：
 
-			STD_FILENEW���½��ļ�ͼ��
-			STD_FILEOPEN�����ļ�ͼ��
-			STD_FILESAVE�������ļ�ͼ��
-			STD_PRINT����ӡͼ��
-			STD_CUT������ͼ��
-			STD_COPY������ͼ��
-			STD_PASTE��ճ��ͼ��
-			STD_UNDO������ͼ��
-			STD_REDOW������ͼ��
-			STD_HELP������ͼ��
-			STD_FIND������ͼ��
-			STD_REPLACE���滻ͼ��
-			  STD_SELECTALL��ȫѡͼ��
-			  STD_BOLD���Ӵ�ͼ��
-			  STD_ITALIC��б��ͼ��
-			  STD_UNDERLINE���»���ͼ��
-			  STD_WARNING������ͼ��
-			  STD_ERROR������ͼ��
-			  STD_INFORMATION����Ϣͼ��
-			  STD_QUESTION������ͼ��
-			��Щ��׼ͼ�����ͨ������ TB_BUTTON �ṹ��� iBitmap ������ʹ�á������Ҫ������Զ���ͼ�꣬����ʹ���Զ��������ʵ�֡�
+			STD_FILENEW：新建文件图标
+			STD_FILEOPEN：打开文件图标
+			STD_FILESAVE：保存文件图标
+			STD_PRINT：打印图标
+			STD_CUT：剪切图标
+			STD_COPY：复制图标
+			STD_PASTE：粘贴图标
+			STD_UNDO：撤销图标
+			STD_REDOW：重做图标
+			STD_HELP：帮助图标
+			STD_FIND：查找图标
+			STD_REPLACE：替换图标
+			  STD_SELECTALL：全选图标
+			  STD_BOLD：加粗图标
+			  STD_ITALIC：斜体图标
+			  STD_UNDERLINE：下划线图标
+			  STD_WARNING：警告图标
+			  STD_ERROR：错误图标
+			  STD_INFORMATION：信息图标
+			  STD_QUESTION：问题图标
+			这些标准图标可以通过设置 TB_BUTTON 结构体的 iBitmap 属性来使用。如果需要更多的自定义图标，可以使用自定义绘制来实现。
 			*/
 			SendMessage(g_hToolBar, TB_ADDBUTTONS, 14, (LPARAM)&tbb);
 			return 0;
@@ -318,7 +318,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam) 
 					MDICREATESTRUCT mcs;
 					HWND hChild;
 					
-					mcs.szTitle = "[δ����]";
+					mcs.szTitle = "[未命名]";
 					mcs.szClass = g_szChild;
 					mcs.hOwner  = g_hInst;
 					mcs.x = mcs.cx = CW_USEDEFAULT;
@@ -327,7 +327,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam) 
 					
 					hChild = (HWND)SendMessage(g_hMDIClient, WM_MDICREATE,0, (LPARAM)&mcs);
 					if(!hChild) {
-						MessageBox(hwnd, "MDI���ڴ���ʧ�ܡ�����ϵͳ�����Ƿ�������Ѱ����������", "����",MB_ICONEXCLAMATION | MB_OK);
+						MessageBoxW(hwnd, "MDI窗口创建失败。请检查系统环境是否正常或寻求技术帮助。", "错误",MB_ICONEXCLAMATION | MB_OK);
 					}
 					break;
 				}
@@ -349,25 +349,25 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam) 
 					hChild = (HWND)SendMessage(g_hMDIClient, WM_MDICREATE, 0, (LPARAM)&mcs);
 
 					if(!hChild) {
-						MessageBox(hwnd, "MDI���ڴ���ʧ�ܡ�����ϵͳ�����Ƿ�������Ѱ����������", "����",
+						MessageBoxW(hwnd, "MDI窗口创建失败。请检查系统环境是否正常或寻求技术帮助。", "错误",
 						MB_ICONEXCLAMATION | MB_OK);
 					}
 					break;
 				}
 				case CM_FILE_ANSITOUNICODE:
-					WinExec("����ת����.EXE",SW_SHOW);
+					WinExec("编码转换器.EXE",SW_SHOW);
 					/*
-					������ʾ״̬�����¿�ѡ������
+					窗口显示状态有以下可选参数：
 
-					SW_HIDE�����ش��ڲ������������ڡ�
-					SW_SHOWNORMAL����������Ĵ�С��λ�ü����ʾ���ڡ�������ڱ���С������󻯣�ϵͳ�Ὣ�仹ԭ��ԭ���Ĵ�С��λ�á�
-					SW_SHOWMINIMIZED������ڲ�������С����
-					SW_SHOWMAXIMIZED������ڲ�������󻯡�
-					SW_SHOW����ʾ���ڲ�������������Ӧ������û�г�Ϊ��С�����ڵ����������ǰ�Ĵ�С��λ����ͬ��
-					SW_MINIMIZE������ڲ�������С����
-					SW_SHOWNOACTIVATE����ʾ���ڣ����������������ڼ����˳��ͬ��ǰ����ڵ�˳��һ�¡�
-					SW_SHOWDEFAULT���ô��ڵ�Ĭ�ϴ�С��λ����ʾ���ڡ�������ڱ���С������󻯣�ϵͳ�Ὣ�仹ԭ��ԭ���Ĵ�С��λ�á�
-					SW_MAXIMIZE������ڲ�������󻯡�
+					SW_HIDE：隐藏窗口并激活其他窗口。
+					SW_SHOWNORMAL：用其最近的大小和位置激活并显示窗口。如果窗口被最小化或最大化，系统会将其还原到原来的大小和位置。
+					SW_SHOWMINIMIZED：激活窗口并将其最小化。
+					SW_SHOWMAXIMIZED：激活窗口并将其最大化。
+					SW_SHOW：显示窗口并激活它。窗口应该是在没有成为最小化窗口的情况下与以前的大小和位置相同。
+					SW_MINIMIZE：激活窗口并将其最小化。
+					SW_SHOWNOACTIVATE：显示窗口，但不激活它。窗口激活的顺序同当前活动窗口的顺序一致。
+					SW_SHOWDEFAULT：用窗口的默认大小和位置显示窗口。如果窗口被最小化或最大化，系统会将其还原到原来的大小和位置。
+					SW_MAXIMIZE：激活窗口并将其最大化。
 					*/
 					break;
 				case CM_WINDOW_TILEHORZ:
@@ -384,8 +384,8 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam) 
 					break;
 					
 				case CM_ABOUT:
-					//MessageBox (hwnd, "537�ı��༭��\n�汾��2.2\nλ����32λ��x86��\n������https://sean537.github.io\n537�����ҳ�Ʒ\nCopyright(C)2023 537Studio.All Rights Reserved." , "537�ı��༭��-����",MB_OK+86);
-					ShellAbout(hwnd, "537�ı��༭��", "537�ı��༭��  �汾��2.2��x86��  ������www.537studio.com  Copyright(C)2023-2024 537Studio.All Rights Reserved.", NULL);
+					//MessageBoxW (hwnd, "537文本编辑器\n版本：2.2\n位数：32位（x86）\n官网：https://sean537.github.io\n537工作室出品\nCopyright(C)2023 537Studio.All Rights Reserved." , "537文本编辑器-关于",MB_OK+86);
+					ShellAbout(hwnd, "537文本编辑器", "537文本编辑器  版本：2.2（x86）  官网：www.537studio.com  Copyright(C)2023-2024 537Studio.All Rights Reserved.", NULL);
 					break;
 				case CM_WEBHELP:
 					ShellExecute(hwnd,"open","https://www.537studio.com/help",NULL,NULL,SW_SHOWNORMAL);
@@ -451,7 +451,7 @@ LRESULT CALLBACK MDIChildWndProc(HWND hwnd, UINT Message, WPARAM wParam,LPARAM l
 		case WM_CREATE: {
 			char szFileName[MAX_PATH];
 			HWND hEdit;
-			//TO DO:���Ӵ��ڵ�EDIT�����ĳ�RichEdit 
+			//TO DO:把子窗口的EDIT函数改成RichEdit 
 			hEdit = CreateWindowEx(WS_EX_CLIENTEDGE, "EDIT", "", WS_CHILD | WS_VISIBLE | WS_HSCROLL | WS_VSCROLL | ES_MULTILINE | ES_WANTRETURN,
 				CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT,
 				hwnd, (HMENU)IDC_CHILD_EDIT, g_hInst, NULL);
@@ -462,7 +462,7 @@ LRESULT CALLBACK MDIChildWndProc(HWND hwnd, UINT Message, WPARAM wParam,LPARAM l
 			GetWindowText(hwnd, szFileName, MAX_PATH);
 			if(*szFileName != '[') {
 				if(!LoadFile(hEdit, szFileName)) {
-					MessageBox(hwnd, "�����ļ�ʧ�ܣ�", "����",MB_OK | MB_ICONEXCLAMATION);
+					MessageBoxW(hwnd, "加载文件失败！", "错误",MB_OK | MB_ICONEXCLAMATION);
 					return -1; //cancel window creation
 				}
 			}
@@ -513,7 +513,7 @@ LRESULT CALLBACK MDIChildWndProc(HWND hwnd, UINT Message, WPARAM wParam,LPARAM l
 					GetWindowText(hwnd, szFileName, MAX_PATH);
 					if(*szFileName != '[') {
 						if(!SaveFile(GetDlgItem(hwnd, IDC_CHILD_EDIT), szFileName)) {
-							MessageBox(hwnd, "��ǰ�ļ�Ϊ�ջ򱣴�ʧ�ܡ�", "������",MB_OK | MB_ICONEXCLAMATION);
+							MessageBoxW(hwnd, "当前文件为空或保存失败。", "无数据",MB_OK | MB_ICONEXCLAMATION);
 							return 0;
 						}
 					} else {
@@ -526,7 +526,7 @@ LRESULT CALLBACK MDIChildWndProc(HWND hwnd, UINT Message, WPARAM wParam,LPARAM l
 
 					if(GetFileName(hwnd, szFileName, TRUE)) {
 						if(!SaveFile(GetDlgItem(hwnd, IDC_CHILD_EDIT), szFileName)) {
-							MessageBox(hwnd, "��ǰ�ļ�Ϊ�ջ򱣴�ʧ�ܡ�", "������",MB_OK | MB_ICONEXCLAMATION);
+							MessageBoxW(hwnd, "当前文件为空或保存失败。", "无数据",MB_OK | MB_ICONEXCLAMATION);
 							return 0;
 						} else {
 							SetWindowText(hwnd, szFileName);
